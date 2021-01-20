@@ -1,0 +1,23 @@
+<body>
+  <article>
+    <div class="container">
+      <section class="main_area">
+        <div class="input_area">
+          <h1>記事作成</h1>
+          <%= form_for @content, :url => {:action => :create}, :html => { role: 'form', :id => "content_form" } do |f| %>
+          <%= render 'layouts/error_form', model: @content %>
+            <p>タイトル</p>
+            <%= f.text_field :title, :size => "137*137" %>
+            <p>記事</p>
+            <%= f.text_area :script, size: "136x50" %>
+            <p>サムネイル画像</p>
+            <label for="thumbnail_image" class="square_btn">画像選択
+            <%= f.file_field :thumbnail, :class => "ignore" %>
+            </label><br>
+            <%= f.submit "投稿", class: "btn" %>
+          <% end %>
+        </div>
+      </section>
+    </div>
+  </article>
+</body>

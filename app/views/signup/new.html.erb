@@ -1,0 +1,28 @@
+<body>
+  <article>
+    <div class="container">
+      <section class="main_area">
+        <div class="input_area">
+          <div class="inner_area">
+            <h1>会員登録</h1>
+            <%= form_for(@user, url: signup_path, html: { role: 'form', id: "signup_form" }) do |f| %>
+            <%= render 'layouts/error_form', model: @user %>
+              <p>名前</p>
+              <%= f.text_field :name, :size => "137*137" %>
+              <p>ブログネーム</p>
+              <%= f.text_field :blog_name, :size => "137*137" %>
+              <p>Eメールアドレス</p>
+              <%= f.email_field :email, :size => "137*137" %>
+              <p>パスワード</p>
+              <%= f.password_field :password, :size => "137*137" %>
+              <p>確認用パスワード</p>
+              <%= f.password_field :password_confirmation, :size => "137*137" %><br>
+              <%= f.submit "登録", class: "btn" %>
+            <% end %>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+<body>
+

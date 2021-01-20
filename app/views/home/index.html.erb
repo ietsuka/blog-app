@@ -1,0 +1,49 @@
+<article>
+  <section class="top_area">
+    <%= image_tag '/title.jpg', size: '1680x600', class: "top_image" %>
+  </section>
+  <div class="container">
+  <section class="main_area">
+    <% if @contents.present? %>
+      <div class="content_area">
+        <% @contents.each do |content| %>
+          <div class="content_info">
+            <%= link_to post_path :id => content.id do %>
+              <div class="thumbnail_area">
+                <% if content.thumbnail %> 
+                  <%= image_tag "/user_images/#{content.thumbnail}", size: '300x300', class: "thumbnail_image" %> 
+                <% else %> 
+                  <%= image_tag "/no_image.png", class: "thumbnail_image" %>
+                <% end%>
+              </div>
+            <% end %>
+            <div class="info_area">
+              <h2>タイトル:
+              <%= link_to post_path :id => content.id do %>
+              <%= content.title %>
+              <% end %>
+              </h2>
+              <p>日付:<%= l content.created_at, format: :long %>
+              </p>
+              <p>作者:<%= link_to mypage_path :id => content.user.id do %><%= content.user.name %>
+              <% end %>
+              </p>
+              <p>コメント数:<%= content.comments.count%>
+              </p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p>まだ投稿されていません。</p>
+    <% end %>
+  </section>
+  <section class="sidebar_area">
+    <% if logged_in? %>
+      <div class="btn_area">
+        <%= link_to "投稿", new_post_path, class: "btn" %>
+      </div>
+    <% end %>
+  </section>
+  </div>
+</article>

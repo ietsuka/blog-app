@@ -1,0 +1,71 @@
+<article>
+  <section class="top_area">
+    <% if @user.blog_name.present? %>
+      <h1><%= @user.blog_name %></h1>
+    <% else %> 
+      <h1>名無しのブログ</h1>
+    <% end %>
+      <%= image_tag '/title.jpg', class: "top_image" %>
+  </section>
+  <div class="container">
+    <section class="main_area">
+      <% if @contents.present? %>
+        <div class="content_area">
+          <% @contents.each do |content| %>
+            <div class="content_info">
+              <%= link_to post_path :id => content.id do %>
+                <div class="thumbnail_area">
+                  <% if content.thumbnail %> 
+                    <%= image_tag "/user_images/#{content.thumbnail}", size: '300x300', class: "thumbnail_image" %> 
+                  <% else %> 
+                    <%= image_tag "/no_image.png", class: "thumbnail_image" %>
+                  <% end%>
+                </div>
+              <% end %>
+              <div class="info_area">
+                <h2>タイトル:
+                <%= link_to post_path :id => content.id do %>
+                <%= content.title %>
+                <% end %>
+                </h2>
+                <p>日付:<%= l content.created_at, format: :long %></p>
+                <p>作者:<%= content.user.name %></p>
+                <p>コメント数:<%= content.comments.count%></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p>まだ投稿されていません。</p>
+      <% end %>
+    </section>
+    
+    <section class="sidebar_area">
+      <% if logged_in? %>
+        <div class="btn_area">
+          <%= link_to "投稿", new_post_path, class: "btn" %>
+        </div>
+      <% end %>
+      <div class="profile_thumbnail_area">
+        <% if @user.profile_thumbnail %> 
+          <%= image_tag "/profile_images/#{@user.id}/#{@user.profile_thumbnail}", size: '300x300', class: "profile_thumbnail" %> 
+        <% else %> 
+          <%= image_tag "/no_image.png", class: "thumbnail_image" %>
+        <% end%>
+      </div>
+      <div class="name_area">
+        <%= @user.name %>
+      </div>
+      <% if @user.profile %> 
+        <div class="profile_area">
+          <%= @user.profile %>
+        </div>
+      <% end%>
+      <% if @user.birthday %> 
+        <div class="birthday_area">
+          <%= l @user.birthday, format: :long %>
+        </div>
+      <% end%>
+    </section>
+  </div>
+</article>
