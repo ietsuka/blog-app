@@ -6,7 +6,8 @@ class SignupController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to controller: :mypage, action: :index
+      log_in @user
+      redirect_to  controller: :mypage, action: :show, id: @user.id
     else
       render "new"
     end

@@ -2,6 +2,8 @@ require'date'
 require 'fileutils'
 
 class SettingController < ApplicationController
+  include Common
+
   def show
     @user = User.find(params[:id])
   end
@@ -11,17 +13,7 @@ class SettingController < ApplicationController
     profile_thumbnail = params[:user][:profile_thumbnail]
     blog_thumbnail = params[:user][:blog_thumbnail]
     if profile_thumbnail
-      if @user.profile_thumbnail?
-        FileUtils.rm("public/profile_images/#{params[:user][:user_id]}/#{@user.profile_thumbnail}")
-      end
-      if !Dir::exist?("public/profile_images/#{params[:user][:user_id]}")
-        FileUtils.mkdir_p("public/profile_images/#{params[:user][:user_id]}", :mode => 755)
-      end
-      profile_thumbnail_name = profile_thumbnail.original_filename
-      File.open("public/profile_images/#{params[:user][:user_id]}/#{profile_thumbnail_name}", 'wb') do |f|
-        f.write profile_thumbnail.read
-      end
-      @user.profile_thumbnail = profile_thumbnail_name
+      @user.profile_thumbnail = registFile(@user, "profile_images", profile_thumbnail)
     end
       @user.birthday = birthday_join
       @user.profile = params[:user][:profile]

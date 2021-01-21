@@ -1,18 +1,14 @@
 class PostsController < ApplicationController
+  include Common
+
   def new 
     @content = Content.new
   end
 
   def create
-    @content = current_user.contents.build(content_params)
+    current_user.present? ? @content = current_user.contents.build(content_params) : @content = Content.new(content_params)
     thumbnail = params[:content][:thumbnail]
-    if thumbnail
-      thumbnail_name = thumbnail.original_filename
-      File.open("public/user_images/#{thumbnail_name}", 'wb') do |f|
-        f.write thumbnail.read
-      end
-      @content.thumbnail = thumbnail_name
-    end
+    @content.thumbnail = registFile(nil, "user_images", thumbnail) if thumbnail
     if @content.save
       redirect_to controller: :home, action: :index
     else
@@ -37,11 +33,7 @@ class PostsController < ApplicationController
     @content.script = content_params[:script]
     thumbnail = params[:content][:thumbnail]
     if thumbnail
-      thumbnail_name = thumbnail.original_filename
-      File.open("public/user_images/#{thumbnail_name}", 'wb') do |f|
-        f.write thumbnail.read
-      end
-      @content.thumbnail = thumbnail_name
+      @content.thumbnail = registFile(nil, "user_images", thumbnail)
     end
     if @content.save
       redirect_to controller: :home, action: :index
@@ -52,6 +44,7 @@ class PostsController < ApplicationController
 
   def destroy
     @content = Content.find(params[:id])
+    deleteFile(@content, "content")
     @content.destroy!
     redirect_to controller: :home, action: :index
   end

@@ -25,7 +25,9 @@
               </h2>
               <p>日付:<%= l content.created_at, format: :long %>
               </p>
-              <p>作者:<%= link_to mypage_path :id => content.user.id do %><%= content.user.name %>
+              <% if content.user_id? %> 
+                <p>作者:<%= link_to mypage_path :id => content.user.id do %><%= content.user.name %>
+                <% end %>
               <% end %>
               </p>
               <p>コメント数:<%= content.comments.count%>
@@ -39,11 +41,9 @@
     <% end %>
   </section>
   <section class="sidebar_area">
-    <% if logged_in? %>
-      <div class="btn_area">
-        <%= link_to "投稿", new_post_path, class: "btn" %>
-      </div>
-    <% end %>
+    <div class="btn_area">
+      <%= link_to "投稿", new_post_path, class: "btn" %>
+    </div>
   </section>
   </div>
 </article>

@@ -29,7 +29,9 @@
                 <% end %>
                 </h2>
                 <p>日付:<%= l content.created_at, format: :long %></p>
-                <p>作者:<%= content.user.name %></p>
+                <% if content.user_id? %>
+                  <p>作者:<%= content.user.name %></p>
+                <% end %>
                 <p>コメント数:<%= content.comments.count%></p>
               </div>
             </div>
@@ -41,31 +43,31 @@
     </section>
     
     <section class="sidebar_area">
-      <% if logged_in? %>
-        <div class="btn_area">
-          <%= link_to "投稿", new_post_path, class: "btn" %>
+      <div class="btn_area">
+        <%= link_to "投稿", new_post_path, class: "btn" %>
+      </div>
+      <% if @user.present? %>
+        <div class="profile_thumbnail_area">
+          <% if @user.profile_thumbnail %>
+            <%= image_tag "/profile_images/#{@user.id}/#{@user.profile_thumbnail}", size: '300x300', class: "profile_thumbnail" %> 
+          <% else %> 
+            <%= image_tag "/no_image.png", class: "thumbnail_image" %>
+          <% end%>
         </div>
-      <% end %>
-      <div class="profile_thumbnail_area">
-        <% if @user.profile_thumbnail %> 
-          <%= image_tag "/profile_images/#{@user.id}/#{@user.profile_thumbnail}", size: '300x300', class: "profile_thumbnail" %> 
-        <% else %> 
-          <%= image_tag "/no_image.png", class: "thumbnail_image" %>
+        <div class="name_area">
+          <%= @user.name %>
+        </div>
+        <% if @user.profile %> 
+          <div class="profile_area">
+            <%= @user.profile %>
+          </div>
         <% end%>
-      </div>
-      <div class="name_area">
-        <%= @user.name %>
-      </div>
-      <% if @user.profile %> 
-        <div class="profile_area">
-          <%= @user.profile %>
-        </div>
-      <% end%>
-      <% if @user.birthday %> 
-        <div class="birthday_area">
-          <%= l @user.birthday, format: :long %>
-        </div>
-      <% end%>
+        <% if @user.birthday %> 
+          <div class="birthday_area">
+            <%= l @user.birthday, format: :long %>
+          </div>
+        <% end%>
+      <% end %>
     </section>
   </div>
 </article>
