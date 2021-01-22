@@ -4,3 +4,31 @@ ja:
       default: ! '%Y/%m/%d'
       long: ! '%Y年%m月%d日'
       short: ! '%m/%d'
+
+  views:
+      pagination:
+        first: <i class="fas fa-angle-double-left"></i>
+        last: <i class="fas fa-angle-double-right"></i>
+        previous: <i class="fas fa-angle-left"></i>
+        next: <i class="fas fa-angle-right"></i>
+        truncate: "..."
+
+  activerecord:
+    models:
+      user: ユーザー
+      content: 記事
+      comment: コメント
+    attributes:
+      user:
+        name: 名前
+        email: Eメールアドレス
+        password: パスワード
+        Password digest: パスワード、確認用パスワード
+      content:
+        title: タイトル
+        script: 記事内容
+        thumbnail: サムネイル画像
+      comment:
+        name: 名前
+        comment: コメント内容
+      

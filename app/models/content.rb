@@ -5,4 +5,6 @@ class Content < ApplicationRecord
     presence: true
   validates :script,
     presence: true
+  validates :thumbnail,
+    uniqueness: { message: "の名前は既に使われています。名前を変更お願いします。" }
 end

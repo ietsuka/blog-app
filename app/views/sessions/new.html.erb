@@ -6,6 +6,9 @@
           <div class="inner_area">
             <h1>ログイン</h1>
             <%= form_for(:session, url: login_path, html: { role: 'form', id: "login_form" }) do |f| %>
+              <div class="alert">
+                <%= flash[:error] %>
+              </div>
               <p>Eメールアドレス</p>
               <%= f.email_field :email, :size => "137*137"%>
               <p>パスワード</p>

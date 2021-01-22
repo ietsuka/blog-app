@@ -23,12 +23,31 @@
           margin: 0 20px 0 0;
         }
       }
+      .pagination {
+        display: flex;
+        justify-content: center;
+      }
+      .pagination > li > a {
+        border: none;
+        color: #999;
+        font-size: 23px;
+        margin: 15px;
+      }
+      .pagination > li > a:hover {
+        color: turquoise;
+        background-color: white;
+      }
+      .pagination > .active > a {
+        color: turquoise;
+        background-color: white;
+      }
+      .pagination > .active > a:hover {
+        background-color: white;
+        color: turquoise;
+      }
     }
   }
 
-  .page_nation {
-
-  }
   .sidebar_area {
     width: 320px;
     height: 600px;

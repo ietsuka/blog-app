@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to root_url
     else
+      flash[:error] = '不正な値が入力されています。'
       render 'new'
     end
   end
