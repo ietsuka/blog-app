@@ -6,10 +6,10 @@ class WithdrawController < ApplicationController
 
   def delete
     @user = User.find(params[:id])
-    @user.update(is_valid: false)
+    @user.update(is_activ: false)
     
     deleteFile(@user, "user")
-    deleteContent(@user)
+    deletePost(@user)
     deleteComment(@user, "user")
     reset_session
     redirect_to root_path

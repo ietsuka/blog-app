@@ -1,57 +1,58 @@
 class PostsController < ApplicationController
   include Common
+  before_action :user_confirmation, only: [:edit, :update, :destroy]
 
   def new 
-    @content = Content.new
+    @post = Post.new
   end
 
   def create
-    current_user.present? ? @content = current_user.contents.build(content_params) : @content = Content.new(content_params)
-    thumbnail = params[:content][:thumbnail]
-    @content.thumbnail = registFile(nil, "user_images", thumbnail) if thumbnail
-    if @content.save
+    current_user.present? ? @post = current_user.posts.build(post_params) : @post = Post.new(post_params)
+    if @post.save
+      flash[:notice] = '投稿に成功しました。'
       redirect_to controller: :home, action: :index
     else
+      flash[:alert] = '投稿に失敗しました。'
       render :new
     end
   end
 
   def show
-    @content = Content.find(params[:id])
-    @comments = @content.comments
-    @comments = @comments.order('created_at DESC')
-    @comment = Comment.new
+    @post = Post.find(params[:id])
   end
 
   def edit
-    @content = Content.find(params[:id])
+    @post = Post.find(params[:id])
   end
 
   def update
-    @content = Content.find(params[:id])
-    @content.title = content_params[:title]
-    @content.script = content_params[:script]
-    thumbnail = params[:content][:thumbnail]
-    if thumbnail
-      @content.thumbnail = registFile(nil, "user_images", thumbnail)
-    end
-    if @content.save
+    @post = Post.find(params[:id])
+    if @post.update_attributes(post_params)
+      flash[:notice] = '更新に成功しました。'
       redirect_to controller: :home, action: :index
     else
+      flash[:alert] = '更新に失敗しました。'
       render :new
     end
   end
 
   def destroy
-    @content = Content.find(params[:id])
+    @post = Post.find(params[:id])
     deleteFile(@content, "content")
-    @content.destroy!
+    @post.destroy!
     redirect_to controller: :home, action: :index
   end
 
   private
+  def post_params
+    params.require(:post).permit(:title, :article, :post_image)
+  end
 
-  def content_params
-    params.require(:content).permit(:id, :title, :script, :thumbnail)
+  def user_confirmation
+    @post = Post.find(params[:id])
+    unless current_user.id == @post.user_id
+      flash[:alert] = "記事編集は投稿者のみです。"
+      redirect_back(fallback_location: root_path)
+    end
   end
 end

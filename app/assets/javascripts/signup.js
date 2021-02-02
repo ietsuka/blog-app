@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', (function () {
+$(document).on('turbolinks:load', function () {
   $('#signup_form').validate({
     rules: {
       "user[name]": {
@@ -37,4 +37,4 @@ window.addEventListener('DOMContentLoaded', (function () {
     errorClass: "invalid",
     validClass: "valid",
   });
-}))
+})

@@ -16,15 +16,16 @@ ja:
   activerecord:
     models:
       user: ユーザー
-      content: 記事
+      post: 記事
       comment: コメント
     attributes:
       user:
         name: 名前
         email: Eメールアドレス
         password: パスワード
-        Password digest: パスワード、確認用パスワード
-      content:
+        password digest: パスワード、確認用パスワード
+        password confirmation: 確認用パスワード
+      post:
         title: タイトル
         script: 記事内容
         thumbnail: サムネイル画像

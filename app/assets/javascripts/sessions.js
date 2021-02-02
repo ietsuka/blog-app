@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', (function () {
+$(document).on('turbolinks:load', function () {
   $('#login_form').validate({
     rules: {
       "session[email]": {
@@ -19,5 +19,5 @@ window.addEventListener('DOMContentLoaded', (function () {
     errorClass: "invalid",
     validClass: "valid",
   });
-}))
+})
 
