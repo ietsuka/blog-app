@@ -17,3 +17,9 @@
 //= require turbolinks
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+
+$(document).on('turbolinks:load', function () {
+  $('.close').on('click', function () {
+    $('.alert').fadeOut();
+  });
+})

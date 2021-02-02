@@ -1,15 +1,14 @@
 require'date'
-require 'fileutils'
 
 class SettingController < ApplicationController
   include Common
 
   def show
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = current_user
     @user.update_attributes(user_params)
     @user.birthday = birthday_join
     if @user.save
