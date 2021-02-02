@@ -1,38 +1,41 @@
-<body>
-  <article>
-    <div class="container">
-      <section class="main_area">
-        <section class="content_area">
-          <p><%= l @content.created_at, format: :long %></p>
-          <h1><%= @content.title %></h1>
-          <div class="thumbnail_area">
-            <% if @content.thumbnail %> 
-              <%= image_tag "/user_images/#{@content.thumbnail}", size: '300x300', class: "thumbnail_image" %> 
-            <% end%>
+<article>
+  <div class="container">
+    <section class="main_area">
+      <section class="content_area">
+        <% if flash[:comment_error].present? %>
+          <div class="alert">
+            <%= flash[:comment_error] %>
           </div>
-          <p class="blog_area"><%= @content.script %></p>
-        </section>
-        <section class="comment_area">
-        <% if @comments.present? %>
-          <% @comments.each do |c| %>
-            
+        <% end %>
+        <p><%= l @post.created_at, format: :long %></p>
+        <h1><%= @post.title %></h1>
+        <div class="thumbnail_area">
+          <% if @post.post_image.attached? %> 
+            <%= image_tag @post.post_image, size: '300x300', class: "thumbnail_image" %> 
+          <% end%>
+        </div>
+        <p class="blog_area"><%= @post.article %></p>
+      </section>
+      <section class="comment_area">
+        <% if @post.comments.present? %>
+          <% @post.comments.order(created_at: :desc).each do |c| %>
             <p><%= l c.created_at, format: :long %></p>
             <p><%= c.name %></p>
             <p><%= c.comment %></p>
-            <% if logged_in? and @content.user_id == current_user.id %>
+            <% if logged_in? && current_user?(@post.user_id) %>
               <div class="btn_area">
                 <div class="comment_edit_buttom">
-                  <button id="open">編集</button>
+                  <button class="open_modal" data-id=<%=c.id %>>編集</button>
                 </div>
-                <div id="overlay"></div>
-                <div id="modalWindow">
+                <div class="overlay"></div>
+                <div class="modalWindow" id=<%= c.id%>>
                   <p>コメントの編集ができます。</p>
-                  <%= form_for(@comment, url: edit_comment_path(c.id), method: :get) do |f| %>
+                  <%= form_with model: c, method: :patch do |f| %>
                     <%= f.label :comment , class: "form-control-label"%>
-                    <%= f.text_area :comment, class: "form-control", value: c.comment, size: "50x10" %>
+                    <%= f.text_area :comment, class: "form-control", value: c.comment, size: "40x10" %>
                     <%= f.submit "編集", class: "btn"%>
                   <% end%>
-                  <button id="close">閉じる</button>
+                  <button class="close_modal">閉じる</button>
                 </div>
                 <div class="content_delete_buttom">
                   <%= link_to c, method: :delete do %>
@@ -45,53 +48,52 @@
         <% else %>
           <p>コメントはありません！</p>
         <% end %>
-        </section>
-        <section class="input_comment_area">
-          <%= form_for @comment, :html => { role: 'form', :id => "comment_form" } do |f| %>
-            <%= render 'layouts/error_form', model: @new_comments %>
-            <p>名前</p>
-            <%= f.text_field :name %>
-            <p>コメント</p>
-            <%= f.text_area :comment, size: "90x10" %>
-            <%= f.hidden_field :content_id, value: @content.id %><br>
-            <%= f.submit "投稿", class: "bottom_area", class: "btn" %>
-          <% end %>
-        </section>
       </section>
-      <section class="sidebar_area">
-        <% if logged_in? and @content.user_id == current_user.id %>
-          <div class="btn_area">
-            <div class="content_edit_buttom">
-              <%= link_to "編集", edit_post_path(@content), class: "btn", method: :get %>
-            </div>
-            <div class="content_delete_buttom">
-              <%= link_to "削除", post_path(@content), class: "btn", method: :delete %>
-            </div>
-          </div>
+      <section class="input_comment_area">
+        <%= form_with model: Comment.new, :html => { role: 'form', :id => "comment_form" } do |f| %>
+          <%= render 'layouts/error_form', model: @new_comments %>
+          <p>名前</p>
+          <%= f.text_field :name %>
+          <p>コメント</p>
+          <%= f.text_area :comment, size: "90x10" %>
+          <%= f.hidden_field :post_id, value: @post.id %><br>
+          <%= f.submit "投稿", class: "bottom_area", class: "btn" %>
         <% end %>
-        <% if @content.user_id? %> 
-          <div class="profile_thumbnail_area">
-            <% if @content.user_id? and @content.user.profile_thumbnail %> 
-              <%= image_tag "/profile_images/#{@content.user.id}/#{@content.user.profile_thumbnail}", size: '300x300', class: "profile_thumbnail" %> 
-            <% else %> 
-              <%= image_tag "/no_image.png", class: "thumbnail_image" %>
-            <% end%>
-          </div>
-          <div class="name_area">
-            <%= @content.user.name %>
-          </div>
-          <% if @content.user.profile %> 
-            <div class="profile_area">
-              <%= @content.user.profile %>
-            </div>
-          <% end%>
-          <% if @content.user.birthday %> 
-            <div class="birthday_area">
-              <%= l @content.user.birthday, format: :long %>
-            </div>
-          <% end%>
-        <% end%>
       </section>
-    </div>
-  </article>
-</body>
+    </section>
+    <section class="sidebar_area">
+      <% if logged_in? && current_user?(@post.user_id) %>
+        <div class="btn_area">
+          <div class="content_edit_buttom">
+            <%= link_to "編集", edit_post_path(@post), class: "btn", method: :get %>
+          </div>
+          <div class="content_delete_buttom">
+            <%= link_to "削除", post_path(@post), class: "btn", method: :delete %>
+          </div>
+        </div>
+      <% end %>
+      <% if @post.user_id? %> 
+        <div class="profile_thumbnail_area">
+          <% if @post.user_id? && @post.user.user_image.attached? %> 
+            <%= image_tag @post.user.user_image, size: '300x300', class: "profile_thumbnail" %> 
+          <% else %> 
+            <%= image_tag "/no_image.png", class: "thumbnail_image" %>
+          <% end%>
+        </div>
+        <div class="name_area">
+          <%= @post.user.name %>
+        </div>
+        <% if @post.user.profile %> 
+          <div class="profile_area">
+            <%= @post.user.profile %>
+          </div>
+        <% end%>
+        <% if @post.user.birthday %> 
+          <div class="birthday_area">
+            <%= l @post.user.birthday, format: :long %>
+          </div>
+        <% end%>
+      <% end%>
+    </section>
+  </div>
+</article>

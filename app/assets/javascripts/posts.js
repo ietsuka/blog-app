@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', (function () {
+$(document).on('turbolinks:load', function () {
   $('#comment_form').validate({
     rules: {
       "comment[name]": {
@@ -41,14 +41,15 @@ window.addEventListener('DOMContentLoaded', (function () {
     validClass: "valid",
   });
 
-  $('#open').on('click', function () {
-    $('#overlay, #modalWindow').fadeIn();
+  $('.open_modal').each(function () {
+    $(this).on('click', function () {
+      var data = $(this).data("id");
+      var modal = document.getElementById(data);
+      $(modal).fadeIn();
+    });
   });
 
-  $('#close').on('click', function () {
-    $('#overlay, #modalWindow').fadeOut();
+  $('.close_modal').on('click', function () {
+    $('.overlay, .modalWindow').fadeOut();
   });
-
-
-}))
-
+})

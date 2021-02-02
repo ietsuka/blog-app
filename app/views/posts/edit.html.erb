@@ -1,25 +1,23 @@
-<body>
-  <article>
-    <div class="container">
-      <section class="main_area">
-        <div class="input_area">
-          <h1>記事修正</h1>
-          <%= form_for @content, :url => {:action => :update} do |f| %>
-            <p>タイトル</p>
-            <%= f.text_field :title, class: "title_area", value: @content.title, :size => "137*137" %>
-            <p>記事</p>
-            <%= f.text_area :script, class: "script_area", value: @content.script, size: "136x50" %>
-            <p>サムネイル</p>
-            <% if @content.thumbnail %> 
-              <%= image_tag "/user_images/#{@content.thumbnail}", size: '300x300', class: "thumbnail_image" %> 
-            <% end%>
-            <label for="thumbnail_image" class="square_btn">画像選択
-            <%= f.file_field :thumbnail, :class => "ignore" %>
-            </label><br>
-            <%= f.submit "投稿", class: "btn" %>
-          <% end %>
-        </div>
-      </section>
-    </div>
-  </article>
-</body>
+<article>
+  <div class="container">
+    <section class="main_area">
+      <div class="input_area">
+        <h1>記事修正</h1>
+        <%= form_with model: @post, :url => {:action => :update} do |f| %>
+          <p>タイトル</p>
+          <%= f.text_field :title, class: "title_area", :size => "137*137" %>
+          <p>記事</p>
+          <%= f.text_area :article, class: "article_area", size: "136x50" %>
+          <p>サムネイル</p>
+          <% if @post.post_image.attached? %> 
+            <%= image_tag @post.post_image, size: '300x300', class: "thumbnail_image" %> 
+          <% end%>
+          <label for="thumbnail_image" class="square_btn">画像選択
+          <%= f.file_field :post_image, :class => "ignore" %>
+          </label><br>
+          <%= f.submit "投稿", class: "btn" %>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</article>

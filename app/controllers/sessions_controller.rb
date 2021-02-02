@@ -1,15 +1,12 @@
 class SessionsController < ApplicationController
-  def new
-  end
-
   def create
-    user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password]) && withdraw_user(user)
+    user = User.find_by(email: params[:email].downcase)
+    if user && user.authenticate(params[:password]) && withdraw_user(user)
       log_in user
-      redirect_to root_url
+      redirect_to controller: :mypage, action: :show, id: user.id
     else
-      flash[:error] = '不正な値が入力されています。'
-      render 'new'
+      flash[:alert] = '正しいメールアドレス、パスワードを入力してください。'
+      redirect_back(fallback_location: root_path)
     end
   end
 

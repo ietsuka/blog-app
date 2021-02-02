@@ -9,25 +9,20 @@ class SettingController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:user][:user_id])
-    profile_thumbnail = params[:user][:profile_thumbnail]
-    blog_thumbnail = params[:user][:blog_thumbnail]
-    if profile_thumbnail
-      @user.profile_thumbnail = registFile(@user, "profile_images", profile_thumbnail)
-    end
-      @user.birthday = birthday_join
-      @user.profile = params[:user][:profile]
+    @user = User.find(params[:id])
+    @user.update_attributes(user_params)
+    @user.birthday = birthday_join
     if @user.save
-      redirect_back(fallback_location: root_path)
+      redirect_back(fallback_location: root_path, notice: '編集に成功しました。')
     else
-      render :new
+      render controller: :setting, action: :show, alert: '編集に失敗しました。'
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:user_id, :profile, :birthday, :profile_thumbnail)
+    params.require(:user).permit(:profile, :birthday, :user_image)
   end
 
   def birthday_join

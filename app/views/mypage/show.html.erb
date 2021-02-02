@@ -5,52 +5,29 @@
     <% else %> 
       <h1>名無しのブログ</h1>
     <% end %>
-      <%= image_tag '/title.jpg', class: "top_image" %>
+    <% if flash[:error].present? %>
+      <div class="alert">
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+    <%= image_tag '/title.jpg', class: "top_image" %>
   </section>
   <div class="container">
     <section class="main_area">
-      <% if @contents.present? %>
-        <div class="content_area">
-          <% @contents.each do |content| %>
-            <div class="content_info">
-              <%= link_to post_path :id => content.id do %>
-                <div class="thumbnail_area">
-                  <% if content.thumbnail %> 
-                    <%= image_tag "/user_images/#{content.thumbnail}", size: '300x300', class: "thumbnail_image" %> 
-                  <% else %> 
-                    <%= image_tag "/no_image.png", class: "thumbnail_image" %>
-                  <% end%>
-                </div>
-              <% end %>
-              <div class="info_area">
-                <h2>タイトル:
-                <%= link_to post_path :id => content.id do %>
-                <%= content.title %>
-                <% end %>
-                </h2>
-                <p>日付:<%= l content.created_at, format: :long %></p>
-                <% if content.user_id? %>
-                  <p>作者:<%= content.user.name %></p>
-                <% end %>
-                <p>コメント数:<%= content.comments.count%></p>
-              </div>
-            </div>
-          <% end %>
-          <%= paginate @contents %>
-        </div>
+      <% if @user.posts.present? %>
+        <%=render "layouts/posts", posts: @user.posts.order(created_at: :desc).page(params[:page]).per(5) %>
       <% else %>
         <p>まだ投稿されていません。</p>
       <% end %>
     </section>
-    
     <section class="sidebar_area">
       <div class="btn_area">
         <%= link_to "投稿", new_post_path, class: "btn" %>
       </div>
       <% if @user.present? %>
         <div class="profile_thumbnail_area">
-          <% if @user.profile_thumbnail %>
-            <%= image_tag "/profile_images/#{@user.id}/#{@user.profile_thumbnail}", size: '300x300', class: "profile_thumbnail" %> 
+          <% if @user.user_image.attached? %>
+            <%= image_tag @user.user_image, size: '300x300', class: "profile_thumbnail" %> 
           <% else %> 
             <%= image_tag "/no_image.png", class: "thumbnail_image" %>
           <% end%>

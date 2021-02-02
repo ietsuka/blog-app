@@ -1,36 +1,34 @@
-<body>
-  <article>
-    <div class="container">
-      <section class="main_area">
-        <div class="input_area">
-          <h1>Profile</h1>
-          <%= form_for(@user, url: setting_path) do |f| %>
-            <p>プロフィール</p>
-            <%= f.text_area :profile, size: "136x10", value: @user.profile%>
-            <p>誕生日</p>
-            <% if @user.profile_thumbnail %> 
+<article>
+  <div class="container">
+    <section class="main_area">
+      <div class="input_area">
+        <h1>Profile</h1>
+        <%= form_with model: @user, url: setting_path do |f| %>
+          <p>プロフィール</p>
+          <%= f.text_area :profile, size: "136x10", value: @user.profile%>
+          <p>誕生日</p>
+          <% if @user.birthday %> 
             <%= f.date_select :birthday, use_month_numbers: true,start_year: 1930, end_year: (Time.now.year - 10), default: @user.birthday%>
-            <% else %>
+          <% else %>
             <%= f.date_select :birthday, use_month_numbers: true,start_year: 1930, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1)%>
-            <% end%>
-            <p>プロフィール画像</p>
-            <% if @user.profile_thumbnail %> 
-              <%= image_tag "/profile_images/#{@user.id}/#{@user.profile_thumbnail}", size: '300x300', class: "thumbnail_image" %><br>
-            <% else %> 
-              <%= image_tag "/no_image.png", class: "thumbnail_image" %>
-            <% end%>
-            <label for="thumbnail_image" class="square_btn">
-            プロフィール画像選択
-            <%= f.file_field :profile_thumbnail, :class => "ignore" %>
-            </label>
-            <%= f.hidden_field :user_id, value:current_user.id%>
-            <div class="btn_area">
+          <% end%>
+          <p>プロフィール画像</p>
+          <% if @user.user_image.attached? %> 
+            <%= image_tag @user.user_image, size: '300x300', class: "thumbnail_image" %><br>
+          <% else %> 
+            <%= image_tag "/no_image.png", class: "thumbnail_image" %>
+          <% end%>
+          <label for="thumbnail_image" class="square_btn">
+          プロフィール画像選択
+          <%= f.file_field :user_image, :class => "ignore" %>
+          </label>
+          <%= f.hidden_field :user_id, value:current_user.id%>
+          <div class="btn_area">
             <%= f.submit "登録", class: "btn" %>
             <%= link_to "退会", show_withdraw_path(@user.id), class: "btn", method: :get %>
-            </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
-    </section>
-  </article>
-</body>
+    </div>
+  </section>
+</article>

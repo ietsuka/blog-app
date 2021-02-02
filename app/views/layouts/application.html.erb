@@ -4,14 +4,12 @@
     <title>ハレブロ</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag params[:controller] %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag params[:controller] %>
     <script src="https://kit.fontawesome.com/a93df4ec79.js" crossorigin="anonymous"></script>
   </head>
-
   <body>
     <header>
       <div class="header_area">
@@ -25,11 +23,12 @@
             <%= link_to "ログアウト", logout_path, method: :delete %>
           <% else %>
             <%= link_to "ログイン", login_path %>
-            <%= link_to "会員登録", signup_path %>
+            <%= link_to "会員登録", new_signup_path %>
           <% end %>
         </div>
       </div>
     </header>
+    <%= render 'layouts/alert' %>
     <%= yield %>
     <footer>
       <div class="footer_area">

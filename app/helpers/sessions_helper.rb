@@ -13,7 +13,7 @@ module SessionsHelper
   
   #受け取ったユーザーがログイン中のユーザーと一致すればtrueを返す
   def current_user?(user)
-    user == current_user
+    user == current_user.id
   end
 
   # ユーザーがログインしていればtrue、その他ならfalseを返す
@@ -28,6 +28,6 @@ module SessionsHelper
   end
 
   def withdraw_user(user)
-    user.is_valid
+    user.is_active
   end
 end
