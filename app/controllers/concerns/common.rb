@@ -8,7 +8,7 @@ module Common extend ActiveSupport::Concern
   def deleteComment(model, target)
     if target == "user"
       model.posts.find_each do |c|
-        c.comments.find_each do |comment|
+        c.comments.find_each do |c|
           c.destroy
         end
       end

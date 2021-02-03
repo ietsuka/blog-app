@@ -22,7 +22,6 @@
           プロフィール画像選択
           <%= f.file_field :user_image, :class => "ignore" %>
           </label>
-          <%= f.hidden_field :user_id, value:current_user.id%>
           <div class="btn_area">
             <%= f.submit "登録", class: "btn" %>
             <%= link_to "退会", show_withdraw_path(@user.id), class: "btn", method: :get %>
