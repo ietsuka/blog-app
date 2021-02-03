@@ -18,27 +18,27 @@
       </section>
       <section class="comment_area">
         <% if @post.comments.present? %>
-          <% @post.comments.order(created_at: :desc).each do |c| %>
-            <p><%= l c.created_at, format: :long %></p>
-            <p><%= c.name %></p>
-            <p><%= c.comment %></p>
+          <% @post.comments.order(created_at: :desc).each do |comment| %>
+            <p><%= l comment.created_at, format: :long %></p>
+            <p><%= comment.name %></p>
+            <p><%= comment.comment %></p>
             <% if logged_in? && current_user?(@post.user_id) %>
               <div class="btn_area">
                 <div class="comment_edit_buttom">
-                  <button class="open_modal" data-id=<%=c.id %>>編集</button>
+                  <button class="open_modal" data-id=<%=comment.id %>>編集</button>
                 </div>
                 <div class="overlay"></div>
-                <div class="modalWindow" id=<%= c.id%>>
+                <div class="modalWindow" id=<%= comment.id%>>
                   <p>コメントの編集ができます。</p>
-                  <%= form_with model: c, method: :patch do |f| %>
+                  <%= form_with model: comment, method: :patch do |f| %>
                     <%= f.label :comment , class: "form-control-label"%>
-                    <%= f.text_area :comment, class: "form-control", value: c.comment, size: "40x10" %>
+                    <%= f.text_area :comment, class: "form-control", value: comment.comment, size: "40x10" %>
                     <%= f.submit "編集", class: "btn"%>
                   <% end%>
                   <button class="close_modal">閉じる</button>
                 </div>
                 <div class="content_delete_buttom">
-                  <%= link_to c, method: :delete do %>
+                  <%= link_to comment, method: :delete do %>
                     <button>削除</button>
                   <%end%>
                 </div>
