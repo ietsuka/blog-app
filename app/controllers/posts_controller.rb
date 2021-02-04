@@ -38,9 +38,14 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    deleteFile(@content, "content")
-    @post.destroy!
-    redirect_to controller: :home, action: :index
+    # deleteFile(@content, "content")
+    if @post.destroy!
+      flash[:notice] = '削除しました。'
+      redirect_to controller: :home, action: :index
+    else
+      flash[:alert] = '削除に失敗しました。'
+      render :new
+    end
   end
 
   private
