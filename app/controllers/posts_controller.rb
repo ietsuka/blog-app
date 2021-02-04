@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-  include Common
   before_action :user_confirmation, only: [:edit, :update, :destroy]
 
   def new 
@@ -38,7 +37,6 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    # deleteFile(@content, "content")
     if @post.destroy!
       flash[:notice] = '削除しました。'
       redirect_to controller: :home, action: :index
