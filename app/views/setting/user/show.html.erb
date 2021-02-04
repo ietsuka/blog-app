@@ -3,7 +3,7 @@
     <section class="main_area">
       <div class="input_area">
         <h1>Profile</h1>
-        <%= form_with model: @user, url: setting_path do |f| %>
+        <%= form_with model: @user, url: setting_user_path do |f| %>
           <p>プロフィール</p>
           <%= f.text_area :profile, size: "136x10", value: @user.profile%>
           <p>誕生日</p>

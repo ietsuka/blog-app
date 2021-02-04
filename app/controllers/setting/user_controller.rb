@@ -1,6 +1,6 @@
 require'date'
 
-class SettingController < ApplicationController
+class Setting::UserController < ApplicationController
   include Common
 
   def show

@@ -27,8 +27,12 @@ Rails.application.config.assets.precompile += %w(
   comments.js
   mypage.css
   mypage.js
+  mypage/user.css
+  mypage/user.js
   setting.css
   setting.js
+  setting/user.css
+  setting/user.js
   withdraw.css
   withdraw.js
 )
