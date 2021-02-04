@@ -18,8 +18,8 @@
         </div>
         <div class="right_area">
           <% if logged_in? %>
-            <%= link_to "マイページ", mypage_path(current_user.id) %>
-            <%= link_to "セッティング", setting_path(current_user.id) %>
+            <%= link_to "マイページ", mypage_user_path(current_user.id) %>
+            <%= link_to "セッティング", setting_user_path(current_user.id) %>
             <%= link_to "ログアウト", logout_path, method: :delete %>
           <% else %>
             <%= link_to "ログイン", login_path %>

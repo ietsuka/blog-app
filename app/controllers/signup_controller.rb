@@ -7,7 +7,7 @@ class SignupController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      redirect_to  controller: :mypage, action: :show, id: @user.id
+      redirect_to "/mypage/user/#{@user.id}"
     else
       render "new"
     end
