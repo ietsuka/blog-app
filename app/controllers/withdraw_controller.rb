@@ -1,5 +1,4 @@
 class WithdrawController < ApplicationController
-  include Common
   before_action :user_confirmation, only: [:delete]
 
   def show
@@ -9,12 +8,9 @@ class WithdrawController < ApplicationController
   def delete
     @user = User.find(params[:id])
     @user.update(is_active: false)
-    
-    deletePost(@user)
-    deleteComment(@user, "user")
     reset_session
     redirect_to root_path
-    flash[:notice] = '投稿に成功しました。'
+    flash[:notice] = '退会に成功しました。'
   end
 
   private
