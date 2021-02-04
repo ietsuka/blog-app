@@ -1,8 +1,6 @@
 require'date'
 
 class Setting::UserController < ApplicationController
-  include Common
-
   def show
     @user = current_user
   end
