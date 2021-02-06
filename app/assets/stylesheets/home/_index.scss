@@ -1,3 +1,5 @@
+@import "common_style";
+
 .top_area {
   width: 100%;
   height: 680px;
@@ -8,7 +10,6 @@
 }
 
 .container { 
-  display: -webkit-flex;
   display: flex;
   height: 100%;
   .main_area {
@@ -34,36 +35,33 @@
         margin: 15px;
       }
       .pagination > li > a:hover {
-        color: turquoise;
+        color: $pagination-color;
         background-color: white;
       }
       .pagination > .active > a {
-        color: turquoise;
+        color: $pagination-color;
         background-color: white;
       }
       .pagination > .active > a:hover {
         background-color: white;
-        color: turquoise;
+        color: $pagination-color;
       }
     }
   }
 
   .sidebar_area {
     width: 320px;
-    height: 600px;
-    .btn {
-      color: #fff;
-      font-size: 20px;
-      font-weight: bold;
-      padding:10px 15px;
-      text-decoration: none;
-      border-radius: 20px;
-      background-color: #00b4eb;
-    }
+    margin-left: 50px;
+    .btn_area {
+      margin: 10px 0;
+      display: flex;
+      .btn {
+        @include btn-style;
+      }
 
-    .btn:hover {
-      background: #009ece;
-      color: #FFF;
+      .btn:hover {
+        background: $hover-color;
+      }
     }
   }
 }

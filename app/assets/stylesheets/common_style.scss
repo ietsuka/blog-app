@@ -1,0 +1,22 @@
+$main-color: #00b4eb;
+$hover-color: #009ece;
+$btn-font: #FFF;
+$pagination-color: turquoise;
+$alert-color: #ea352d;
+
+@mixin btn-style {
+  color: $btn-font;
+  font-size: 20px;
+  font-weight: bold;
+  padding:10px 15px;
+  text-decoration: none;
+  border-radius: 20px;
+  background-color: $main-color;
+}
+
+@mixin error-style {
+  color: $alert-color;
+  line-height: 1.5;
+  font-size: 20px;
+  margin-top: 8px;
+}
