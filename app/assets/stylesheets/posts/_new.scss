@@ -1,25 +1,16 @@
+@import "common_style";
+
 .container { 
   .main_area {
     .input_area {
       .btn {
-        color: #fff;
-        font-size: 20px;
-        font-weight: bold;
-        padding:10px 15px;
-        text-decoration: none;
-        border-radius: 20px;
-        background-color: #00b4eb;
-        margin-top: 10px;
+        @include btn-style;
       }
       .btn:hover {
-        background: #009ece;
-        color: #FFF;
+        background: $hover-color;
       }
       #content_title-error, #content_script-error {
-        color: #ea352d;
-        line-height: 1.5;
-        font-size: 20px;
-        margin-top: 8px;
+        @include error-style;
       }
     }
   }

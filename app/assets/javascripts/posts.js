@@ -45,6 +45,7 @@ $(document).on('turbolinks:load', function () {
     $(this).on('click', function () {
       var data = $(this).data("id");
       var modal = document.getElementById(data);
+      $('.overlay').fadeIn();
       $(modal).fadeIn();
     });
   });

@@ -1,22 +1,13 @@
+@import "common_style";
+
 .container { 
   .main_area {
-    .btn_area {
-      text-align: right;
-      padding: 20px 0;
-      .btn {
-        color: #fff;
-        font-size: 20px;
-        font-weight: bold;
-        padding:10px 15px;
-        text-decoration: none;
-        border-radius: 20px;
-        background-color: #00b4eb;
-      }
+    .btn {
+      @include btn-style;
+    }
 
-      .btn:hover {
-        background: #009ece;
-        color: #FFF;
-      }
+    .btn:hover {
+      background: $hover-color;
     }
   }
 }
