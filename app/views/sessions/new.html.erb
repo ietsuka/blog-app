@@ -4,11 +4,11 @@
       <div class="input_area">
         <div class="inner_area">
           <h1>ログイン</h1>
-          <%= form_with model: @session, url: login_path, html: { role: 'form', id: "login_form" } do |f| %>
+          <%= form_with model: @session, url: login_path do |f| %>
             <p>Eメールアドレス</p>
-            <%= f.email_field :email, :size => "137*137"%>
+            <%= f.email_field :email, size: "137*137"%>
             <p>パスワード</p>
-            <%= f.password_field :password, :size => "137*137" %><br>
+            <%= f.password_field :password, size: "137*137" %><br>
             <%= f.submit "ログイン", class: "btn" %>
           <% end %>
           <p>まだアカウントをお持ちではありませんか? <%= link_to "会員登録はこちら！", new_signup_path %></p>

@@ -12,14 +12,14 @@
       <% end %>
       <div class="info_area">
         <h2>タイトル:
-          <%= link_to post_path :id => post.id do %>
+          <%= link_to post_path id: post.id do %>
             <%= post.title %>
           <% end %>
         </h2>
         <p>日付:<%= l post.created_at, format: :long %></p>
         <% if post.user_id? %> 
           <p>作者:
-            <%= link_to mypage_user_path :id => post.user.id do %>
+            <%= link_to mypage_user_path id: post.user.id do %>
               <%= post.user.name %>
             <% end %>
           </p>
