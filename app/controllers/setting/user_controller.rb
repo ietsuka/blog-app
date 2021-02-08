@@ -19,11 +19,11 @@ class Setting::UserController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:profile, :birthday, :user_image)
+    params.require(:user).permit(:blog_name, :profile, :birthday, :user_image)
   end
 
   def birthday_join
     date = params[:user]
-    Date.new date["birthday(1i)"].to_i,date["birthday(2i)"].to_i,date["birthday(3i)"].to_i
+    Time.zone.local(date["birthday(1i)"].to_i,date["birthday(2i)"].to_i,date["birthday(3i)"].to_i)
   end
 end
