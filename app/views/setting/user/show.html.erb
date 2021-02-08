@@ -4,6 +4,8 @@
       <div class="input_area">
         <h1>Profile</h1>
         <%= form_with model: @user, url: setting_user_path do |f| %>
+          <p>ブログネーム</p>
+          <%= f.text_field :blog_name, size: "136x10", value: @user.blog_name%>
           <p>プロフィール</p>
           <%= f.text_area :profile, size: "136x10", value: @user.profile%>
           <p>誕生日</p>
