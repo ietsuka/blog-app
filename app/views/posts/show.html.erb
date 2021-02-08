@@ -50,7 +50,7 @@
         <% end %>
       </section>
       <section class="input_comment_area">
-        <%= form_with model: Comment.new, :html => { role: 'form', :id => "comment_form" } do |f| %>
+        <%= form_with model: Comment.new do |f| %>
           <%= render 'layouts/error_form', model: @new_comments %>
           <p>名前</p>
           <%= f.text_field :name %>
